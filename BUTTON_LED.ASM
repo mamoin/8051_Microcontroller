@@ -1,0 +1,47 @@
+	
+	ORG	00H
+	
+	MOV	SP, #5FH
+	MOV	PSW,#00H
+	MOV     P1,#0FFH
+	MOV	P2,#00H
+
+	HERE:	JB P1.0,HERE
+
+OVER:	MOV     A,  #00000001B
+	MOV     R0, #7
+	MOV     R5, #8
+
+AGAIN:	MOV	P2,A
+	LCALL	DELAY
+	RL      A
+	DJNZ	R0,AGAIN
+	MOV     A,  #10000000B
+
+AGAIN_:	MOV	P2,A
+	LCALL	DELAY
+	RR      A
+	DJNZ	R5,AGAIN_
+	
+	MOV     P2,#00H
+	LJMP    HERE   
+	
+	
+	
+	
+DELAY:	MOV	R2, #30
+L3:	MOV	R3, #110
+L2:	MOV	R4, #150
+L1:	DJNZ	R4, L1
+	DJNZ	R3, L2
+	DJNZ	R2, L3
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	RET
+	
+	END
